@@ -1,0 +1,136 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f7f7f7;
+}
+
+h1 {
+    text-align: center;
+    color: #333;
+    margin-top: 50px;
+}
+
+.container {
+    margin: 20px auto;
+    width: 400px;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+label {
+    display: block;
+    margin-bottom: 10px;
+    color: #555;
+}
+
+input[type="text"] {
+    width: 90%;
+    padding: 10px;
+    border-radius: 3px;
+    border: 1px solid #ccc;
+    outline: none;
+}
+
+input[type="submit"] {
+    margin-top: 3%;
+    width: 100%;
+    padding: 10px;
+    background-color: #4caf50;
+    color: #fff;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+}
+
+input[type="submit"]:hover {
+    background-color: #45a049;
+}
+
+.result {
+    margin-top: 20px;
+    padding: 20px;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.result h3 {
+    margin-top: 0;
+    color: #333;
+}
+
+.result p {
+    margin-bottom: 10px;
+    color: #777;
+}
+
+.result span {
+    font-weight: bold;
+}
+
+
+/*  */
+/*  */
+/*  */
+.custom-select {
+    display: inline-block;
+    position: relative;
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+    padding: 8px 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: #fff;
+    color: #333;
+}
+
+.custom-select:focus {
+    outline: none;
+    border-color: #66afe9;
+}
+
+.custom-select::after {
+    content: '\25BC';
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+    pointer-events: none;
+}
+
+.custom-select option {
+    background-color: #fff;
+    color: #333;
+}
+.custom-select {
+    background-color: #f2f2f2;
+    color: #333;
+}
+.custom-select option {
+    background-color: #f2f2f2;
+    color: #333;
+}
+.custom-select {
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+.custom-select {
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+.custom-select {
+    width: 200px;
+    /* height: 30px; */
+}
+.custom-select::after {
+    color: #666;
+}
+.myH1{
+    border-bottom:1px #000 solid;
+    display:inline-flex;
+    width: 100%;
+    padding: 3%
+}

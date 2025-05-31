@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <title>高鐵時刻查詢</title>
+    <link rel="stylesheet" href="../static/max.css">
+    <link rel="stylesheet" href="jqueryui/style.css">
+    <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/uicons-regular-rounded/css/uicons-regular-rounded.css'>
+</head>
+<body>
+    <h1>高鐵時刻查詢</h1>
+    <div class="container">
+        <!-- <label for="transport">選擇公共交通：</label> -->
+        <!-- 日期 -->
+        <div class="date-wrapper">
+            <input type="text" class="date-inp" id="starDay" name="startDay" value="請填寫日期" autocomplete="off" readonly >
+        </div>
+
+        <label for="departure">起点站：</label>
+        <!-- <input type="text" id="departure" placeholder="请输入起点站编号"> -->
+        <select id="station-select" class="custom-select">
+            <option value="">請選擇</option>
+            <option value="南港">南港</option>
+            <option value="台北">台北</option>
+            <option value="板橋">板橋</option>
+            <option value="桃園">桃園</option>
+            <option value="新竹">新竹</option>
+            <option value="苗栗">苗栗</option>
+            <option value="台中">台中</option>
+            <option value="彰化">彰化</option>
+            <option value="雲林">雲林</option>
+            <option value="嘉義">嘉義</option>
+            <option value="台南">台南</option>
+            <option value="左營">左營</option>
+            <!-- 其他縣市的選項 -->
+        </select>
+
+        <!-- 終點站 -->
+        <label for="departure">終點站：</label>
+        <select id="station-select-end" class="custom-select" >
+            <option value="">請選擇</option>
+            <option value="南港">南港</option>
+            <option value="台北">台北</option>
+            <option value="板橋">板橋</option>
+            <option value="桃園">桃園</option>
+            <option value="新竹">新竹</option>
+            <option value="苗栗">苗栗</option>
+            <option value="台中">台中</option>
+            <option value="彰化">彰化</option>
+            <option value="雲林">雲林</option>
+            <option value="嘉義">嘉義</option>
+            <option value="台南">台南</option>
+            <option value="左營">左營</option>
+            <!-- 其他縣市的選項 -->
+        </select>
+
+        <input type="submit" id="search-train" value="查询">
+    </div>
+
+    <div class="result">
+        <h3>查询结果:</h3>
+        <div id="apireponse" >
+            <span id="apirespan">
+            </span>
+        </div>
+    </div>
+</body>
+    
+    <link rel="stylesheet" href="//apps.bdimg.com/libs/jqueryui/1.10.4/css/jquery-ui.min.css">
+    <script src="//apps.bdimg.com/libs/jqueryui/1.10.4/jquery-ui.min.js"></script>
+    <!-- <script src="../static/max.js"></script> -->
+    <script src="../static/high-speed-rail.js"></script>
+</html>

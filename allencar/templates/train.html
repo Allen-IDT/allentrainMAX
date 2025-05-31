@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <title>火车时刻查询</title>
+    <link rel="stylesheet" href="../static/max.css">
+    <link rel="stylesheet" href="jqueryui/style.css">
+</head>
+<body>
+    <h1>火车时刻查询</h1>
+    <div class="container">
+        <!-- <label for="transport">選擇公共交通：</label> -->
+        <!-- 日期 -->
+        <div class="date-wrapper">
+            <input type="text" class="date-inp" id="starDay" name="startDay" value="請填寫日期" autocomplete="off" readonly >
+        </div>
+        <label for="departure">起点站：</label>
+        <!-- <input type="text" id="departure" placeholder="请输入起点站编号"> -->
+        <select id="station-select" class="custom-select" onchange="showSecondSelect()">
+            <option value="">請選擇</option>
+            <option value="臺北">臺北</option>
+            <option value="新北">新北</option>
+            <option value="台中">台中</option>
+            <option value="桃園">桃園</option>
+            <option value="基隆">基隆</option>
+            <option value="新竹縣">新竹縣</option>
+            <option value="新竹市">新竹市</option>
+            <option value="苗栗">苗栗</option>
+            <option value="彰化">彰化</option>
+            <option value="南投">南投</option>
+            <option value="雲林">雲林</option>
+            <option value="嘉義縣">嘉義縣</option>
+            <option value="嘉義市">嘉義市</option>
+            <option value="台南">台南</option>
+            <option value="高雄">高雄</option>
+            <option value="屏東">屏東</option>
+            <option value="台東">台東</option>
+            <option value="花蓮">花蓮</option>
+            <option value="宜蘭">宜蘭</option>
+            <!-- 其他縣市的選項 -->
+        </select>
+        <!-- 台北 -->
+        <div id="second-select-container" style="display: none;">
+            <select id="second-select"  class="custom-select">
+                <option value="臺北">臺北</option>
+                <option value="南港">南港</option>
+                <option value="松山">松山</option>
+                <option value="臺北-環島">臺北-環島</option>
+                <option value="萬華">萬華</option>
+            </select>
+        </div>
+        <!-- 新北 -->
+        <div id="second-New-Taipei" style="display: none;">
+            <select id="second-select" class="custom-select">
+                <option value="五堵">五堵</option>
+                <option value="汐止">汐止</option>
+                <option value="汐科">汐科</option>
+                <option value="板橋">板橋</option>
+                <option value="福州">福州</option>
+                <option value="樹林">樹林</option>
+                <option value="南樹林">南樹林</option>
+                <option value="山佳">山佳</option>
+                <option value="鶯歌">鶯歌</option>
+                <option value="福隆">福隆</option>
+                <option value="貢寮">貢寮</option>
+                <option value="雙溪">雙溪</option>
+                <option value="牡丹">牡丹</option>
+                <option value="三貂嶺">三貂嶺</option>
+                <option value="大華">大華</option>
+                <option value="十分">十分</option>
+                <option value="望古">望古</option>
+                <option value="嶺腳">嶺腳</option>
+                <option value="平溪">平溪</option>
+                <option value="菁銅">菁銅</option>
+                <option value="猴硐">猴硐</option>
+                <option value="瑞芳">瑞芳</option>
+                <option value="八斗子">八斗子</option>
+                <option value="四腳亭">四腳亭</option>
+            </select>
+        </div>
+        <!-- 基隆 -->
+        <div id="second-Kee-lung" style="display: none;">
+            <select id="second-select" class="custom-select">
+                <option value="基隆">基隆</option>
+                <option value="三坑">三坑</option>
+                <option value="八堵">八堵</option>
+                <option value="七堵">七堵</option>
+                <option value="百福">百福</option>
+                <option value="海科館">海科館</option>
+                <option value="暖暖">暖暖</option>
+            </select>
+        </div>
+        <!-- 台中 -->
+        <div id="second-Taichung" style="display: none;">
+            <select id="second-select" class="custom-select">
+                <option value="日南">日南</option>
+                <option value="大甲">大甲</option>
+                <option value="台中港">台中港</option>
+                <option value="清水">清水</option>
+                <option value="沙鹿">沙鹿</option>
+                <option value="龍井">龍井</option>
+                <option value="大肚">大肚</option>
+                <option value="追分">追分</option>
+                <option value="泰安">泰安</option>
+                <option value="后里">后里</option>
+                <option value="豐原">豐原</option>
+                <option value="栗林">栗林</option>
+                <option value="潭子">潭子</option>
+                <option value="頭家厝">頭家厝</option>
+                <option value="松竹">松竹</option>
+                <option value="太原">太原</option>
+                <option value="精武">精武</option>
+                <option value="台中">台中</option>
+                <option value="五權">五權</option>
+                <option value="大慶">大慶</option>
+                <option value="烏日">烏日</option>
+                <option value="新烏日">新烏日</option>
+                <option value="成功">成功</option>
+            </select>
+        </div>
+        <!-- 桃園 -->
+        <div id="second-Taoyuan" style="display: none;">
+            <select id="second-select" class="custom-select">
+                <option value="楊梅">楊梅</option>
+                <option value="內壢">內壢</option>
+                <option value="中壢">中壢</option>
+                <option value="埔心">埔心</option>
+                <option value="楊梅">楊梅</option>
+                <option value="富岡">富岡</option>
+                <option value="新富">新富</option>   
+                <option value="山佳">山佳</option>
+                <option value="鶯歌">鶯歌</option>
+                <option value="福隆">福隆</option>
+                <option value="貢寮">貢寮</option>
+                <option value="雙溪">雙溪</option>
+                <option value="牡丹">牡丹</option>
+                <option value="三貂嶺">三貂嶺</option>
+                <option value="大華">大華</option>
+                <option value="十分">十分</option>
+                <option value="望古">望古</option>
+                <option value="嶺腳">嶺腳</option>
+                <option value="平溪">平溪</option>
+                <option value="菁銅">菁銅</option>
+                <option value="猴硐">猴硐</option>
+                <option value="瑞芳">瑞芳</option>
+                <option value="八斗子">八斗子</option>
+                <option value="四腳亭">四腳亭</option>
+            </select>
+        </div>
+        <!-- 新竹縣 -->
+        <div id="second-Hsinchu-County" style="display: none;">
+            <select id="second-select" class="custom-select">
+                <option value="北湖">北湖</option>
+                <option value="湖口">湖口</option>
+                <option value="新豐">新豐</option>
+                <option value="竹北">竹北</option>
+                <option value="竹中">竹中</option>
+                <option value="六家">六家</option>
+                <option value="上員">上員</option>
+                <option value="榮華">榮華</option>
+                <option value="竹中">竹中</option>
+                <option value="橫山">橫山</option>
+                <option value="九讚頭">九讚頭</option>
+                <option value="合興">合興</option>
+                <option value="富貴">富貴</option>
+                <option value="內灣">內灣</option>
+            </select>
+        </div>
+        <!-- 新竹市 -->
+        <div id="second-Hsinchu-City" style="display: none;">
+            <select id="second-select" class="custom-select">
+                <option value="北新竹">北新竹</option>
+                <option value="千甲">千甲</option>
+                <option value="新莊">新莊</option>
+                <option value="新竹">新竹</option>
+                <option value="三姓橋">三姓橋</option>
+                <option value="香山">香山</option>
+            </select>
+        </div>
+        <!-- 苗栗 -->
+        <div id="second-Miaoli" style="display: none;">
+            <select id="second-select" class="custom-select">
+                <option value="崎頂">崎頂</option>
+                <option value="竹南">竹南</option>
+                <option value="談文">談文</option>
+                <option value="大山">大山</option>
+                <option value="後龍">後龍</option>
+                <option value="龍港">龍港</option>
+                <option value="白沙屯">白沙屯</option>
+                <option value="新埔">新埔</option>
+                <option value="通霄">通霄</option>
+                <option value="苑裡">苑裡</option>
+                <option value="造橋">造橋</option>
+                <option value="豐富">豐富</option>
+                <option value="苗栗">苗栗</option>
+                <option value="南勢">南勢</option>
+                <option value="銅鑼">銅鑼</option>
+                <option value="三義">三義</option>
+            </select>
+        </div>
+        <!-- 彰化 -->
+        <div id="second-Changhua" style="display: none;">
+            <select id="second-select" class="custom-select">
+                <option value="彰化">彰化</option>
+                <option value="花壇">花壇</option>
+                <option value="大村">大村</option>
+                <option value="員林">員林</option>
+                <option value="永靖">永靖</option>
+                <option value="社頭">社頭</option>
+                <option value="田中">田中</option>
+                <option value="二水">二水</option>
+                <option value="源泉">源泉</option>
+            </select>
+        </div>
+        <!-- 南投 -->
+        <div id="second-Nantou" style="display: none;">
+            <select id="second-select" class="custom-select">
+                <option value="濁水">濁水</option>
+                <option value="龍泉">龍泉</option>
+                <option value="集集">集集</option>
+                <option value="水里">水里</option>
+                <option value="車埕">車埕</option>
+            </select>
+        </div>
+        <!-- 雲林 -->
+        <div id="second-Yunlin" style="display: none;">
+            <select id="second-select" class="custom-select">
+                <option value="林內">林內</option>
+                <option value="石榴">石榴</option>
+                <option value="斗六">斗六</option>
+                <option value="斗南">斗南</option>
+                <option value="石龜">石龜</option>
+            </select>
+        </div>
+        <!-- 嘉義縣 -->
+        <div id="second-Chiayi-County" style="display: none;">
+            <select id="second-select" class="custom-select">
+                <option value="Dalin">大林</option>
+                <option value="Minxiong">民雄</option>
+                <option value="on the water">水上</option>
+                <option value="Nanjing">南靖</option>
+            </select>
+        </div>
+        <!-- 嘉義市 -->
+        <div id="second-Chiayi-City" style="display: none;">
+            <select id="second-select" class="custom-select">
+                <option value="Jiabei">嘉北</option>
+                <option value="Chiayi">嘉義</option>
+            </select>
+        </div>
+        <!-- 台南市 -->
+        <div id="second-Tainan" style="display: none;">
+            <select id="second-select" class="custom-select">
+                <option value="Jiabei">後壁</option>
+                <option value="Chiayi">新營</option>
+                <option value="Jiabei">柳營</option>
+                <option value="Chiayi">林鳳營</option>
+                <option value="Jiabei">隆田</option>
+                <option value="Chiayi">拔林</option>
+                <option value="Jiabei">善化</option>
+                <option value="Chiayi">南科</option>
+                <option value="Jiabei">新市</option>
+                <option value="Chiayi">永康</option>
+                <option value="Chiayi">大橋</option>
+                <option value="Chiayi">臺南</option>
+                <option value="Chiayi">保安</option>
+                <option value="Chiayi">仁德</option>
+                <option value="Chiayi">中洲</option>
+                <option value="Chiayi">長榮大學</option>
+                <option value="Chiayi">沙崙</option>
+            </select>
+        </div>
+        <!-- 高雄 -->
+        <div id="second-Kaohsiung" style="display: none;">
+            <select id="second-select" class="custom-select">
+                <option value="great lake">大湖</option>
+                <option value="Lu Zhu">路竹</option>
+                <option value="Okayama">岡山</option>
+                <option value="bridgehead">橋頭</option>
+                <option value="Nan Zi">楠梓</option>
+                <option value="Xinzuoying">新左營</option>
+                <option value="Zuoying">左營</option>
+                <option value="Neiwei">內惟</option>
+                <option value="art gallery">美術館</option>
+                <option value="drum mountain">鼓山</option>
+                <option value="Sankuai">三塊厝</option>
+                <option value="Kaohsiung">高雄</option>
+                <option value="nationality">民族</option>
+                <option value="Science and Industry Museum">科工館</option>
+                <option value="justice">正義</option>
+                <option value="Fengshan">鳳山</option>
+                <option value="Houzhuang">後庄</option>
+                <option value="Jiuqu Hall">九曲堂</option>
+            </select>
+        </div>
+        <!-- 屏東 -->
+        <div id="second-Pintung" style="display: none;">
+            <select id="second-select" class="custom-select">
+                <option value="Liukuaicuo">六塊厝</option>
+                <option value="Pingtung">屏東</option>
+                <option value="come back">歸來</option>
+                <option value="Linluo">麟洛</option>
+                <option value="west trend">西勢</option>
+                <option value="Takeda">竹田</option>
+                <option value="Chaozhou">潮州</option>
+                <option value="Kanding">崁頂</option>
+                <option value="Nanzhou">南州</option>
+                <option value="Zhen'an">鎮安</option>
+                <option value="forest edge">林邊</option>
+                <option value="Jiadong">佳冬</option>
+                <option value="East China Sea">東海</option>
+                <option value="Fangliao">枋寮</option>
+                <option value="Gallo">加祿</option>
+                <option value="inner lion">內獅</option>
+                <option value="Fangshan">枋山</option>
+            </select>
+        </div>
+        <!-- 台東 -->
+        <div id="second-Taitung" style="display: none;">
+            <select id="second-select" class="custom-select">
+                <option value="Dawu">大武</option>
+                <option value="Long Creek">瀧溪</option>
+                <option value="Jinlun">金崙</option>
+                <option value="too mari">太麻里</option>
+                <option value="Zhiben">知本</option>
+                <option value="recreation">康樂</option>
+                <option value="Taitung">臺東</option>
+                <option value="in the mountains">山里</option>
+                <option value="Kano">鹿野</option>
+                <option value="Ruiyuan">瑞源</option>
+                <option value="Ruihe">瑞和</option>
+                <option value="Guanshan">關山</option>
+                <option value="sea ​​end">海端</option>
+                <option value="Ikegami">池上</option>
+            </select>
+        </div>
+
+
+
+        <!-- 終點站 -->
+        <label for="departure">終點站：</label>
+        <select id="station-select-end" class="custom-select" onchange="showend()">
+            <option value="">請選擇</option>
+            <option value="臺北">臺北</option>
+            <option value="新北">新北</option>
+            <option value="台中">台中</option>
+            <option value="桃園">桃園</option>
+            <option value="基隆">基隆</option>
+            <option value="新竹縣">新竹縣</option>
+            <option value="新竹市">新竹市</option>
+            <option value="苗栗">苗栗</option>
+            <option value="彰化">彰化</option>
+            <option value="南投">南投</option>
+            <option value="雲林">雲林</option>
+            <option value="嘉義縣">嘉義縣</option>
+            <option value="嘉義市">嘉義市</option>
+            <option value="台南">台南</option>
+            <option value="高雄">高雄</option>
+            <option value="屏東">屏東</option>
+            <option value="台東">台東</option>
+            <option value="花蓮">花蓮</option>
+            <option value="宜蘭">宜蘭</option>
+            <!-- 其他縣市的選項 -->
+        </select>
+        <!-- 台北 -->
+        <div id="second-select-container2" style="display: none;">
+            <select id="second-select"  class="custom-select">
+                <option value="臺北">臺北</option>
+                <option value="南港">南港</option>
+                <option value="松山">松山</option>
+                <option value="臺北-環島">臺北-環島</option>
+                <option value="萬華">萬華</option>
+            </select>
+        </div>
+        <!-- 新北 -->
+        <div id="second-New-Taipei2" style="display: none;">
+            <select id="second-select" class="custom-select">
+                <option value="五堵">五堵</option>
+                <option value="汐止">汐止</option>
+                <option value="汐科">汐科</option>
+                <option value="板橋">板橋</option>
+                <option value="福州">福州</option>
+                <option value="樹林">樹林</option>
+                <option value="南樹林">南樹林</option>
+                <option value="山佳">山佳</option>
+                <option value="鶯歌">鶯歌</option>
+                <option value="福隆">福隆</option>
+                <option value="貢寮">貢寮</option>
+                <option value="雙溪">雙溪</option>
+                <option value="牡丹">牡丹</option>
+                <option value="三貂嶺">三貂嶺</option>
+                <option value="大華">大華</option>
+                <option value="十分">十分</option>
+                <option value="望古">望古</option>
+                <option value="嶺腳">嶺腳</option>
+                <option value="平溪">平溪</option>
+                <option value="菁銅">菁銅</option>
+                <option value="猴硐">猴硐</option>
+                <option value="瑞芳">瑞芳</option>
+                <option value="八斗子">八斗子</option>
+                <option value="四腳亭">四腳亭</option>
+            </select>
+        </div>
+        <!-- 基隆 -->
+        <div id="second-Kee-lung2" style="display: none;">
+            <select id="second-select" class="custom-select">
+                <option value="基隆">基隆</option>
+                <option value="三坑">三坑</option>
+                <option value="八堵">八堵</option>
+                <option value="七堵">七堵</option>
+                <option value="百福">百福</option>
+                <option value="海科館">海科館</option>
+                <option value="暖暖">暖暖</option>
+            </select>
+        </div>
+        <!-- 台中 -->
+        <div id="second-Taichung2" style="display: none;">
+            <select id="second-select" class="custom-select">
+                <option value="日南">日南</option>
+                <option value="大甲">大甲</option>
+                <option value="台中港">台中港</option>
+                <option value="清水">清水</option>
+                <option value="沙鹿">沙鹿</option>
+                <option value="龍井">龍井</option>
+                <option value="大肚">大肚</option>
+                <option value="追分">追分</option>
+                <option value="泰安">泰安</option>
+                <option value="后里">后里</option>
+                <option value="豐原">豐原</option>
+                <option value="栗林">栗林</option>
+                <option value="潭子">潭子</option>
+                <option value="頭家厝">頭家厝</option>
+                <option value="松竹">松竹</option>
+                <option value="太原">太原</option>
+                <option value="精武">精武</option>
+                <option value="台中">台中</option>
+                <option value="五權">五權</option>
+                <option value="大慶">大慶</option>
+                <option value="烏日">烏日</option>
+                <option value="新烏日">新烏日</option>
+                <option value="成功">成功</option>
+            </select>
+        </div>
+        <!-- 桃園 -->
+        <div id="second-Taoyuan2" style="display: none;">
+            <select id="second-select" class="custom-select">
+                <option value="楊梅">楊梅</option>
+                <option value="內壢">內壢</option>
+                <option value="中壢">中壢</option>
+                <option value="埔心">埔心</option>
+                <option value="楊梅">楊梅</option>
+                <option value="富岡">富岡</option>
+                <option value="新富">新富</option>   
+                <option value="山佳">山佳</option>
+                <option value="鶯歌">鶯歌</option>
+                <option value="福隆">福隆</option>
+                <option value="貢寮">貢寮</option>
+                <option value="雙溪">雙溪</option>
+                <option value="牡丹">牡丹</option>
+                <option value="三貂嶺">三貂嶺</option>
+                <option value="大華">大華</option>
+                <option value="十分">十分</option>
+                <option value="望古">望古</option>
+                <option value="嶺腳">嶺腳</option>
+                <option value="平溪">平溪</option>
+                <option value="菁銅">菁銅</option>
+                <option value="猴硐">猴硐</option>
+                <option value="瑞芳">瑞芳</option>
+                <option value="八斗子">八斗子</option>
+                <option value="四腳亭">四腳亭</option>
+            </select>
+        </div>
+        <!-- 新竹縣 -->
+        <div id="second-Hsinchu-County2" style="display: none;">
+            <select id="second-select" class="custom-select">
+                <option value="北湖">北湖</option>
+                <option value="湖口">湖口</option>
+                <option value="新豐">新豐</option>
+                <option value="竹北">竹北</option>
+                <option value="竹中">竹中</option>
+                <option value="六家">六家</option>
+                <option value="上員">上員</option>
+                <option value="榮華">榮華</option>
+                <option value="竹中">竹中</option>
+                <option value="橫山">橫山</option>
+                <option value="九讚頭">九讚頭</option>
+                <option value="合興">合興</option>
+                <option value="富貴">富貴</option>
+                <option value="內灣">內灣</option>
+            </select>
+        </div>
+        <!-- 新竹市 -->
+        <div id="second-Hsinchu-City2" style="display: none;">
+            <select id="second-select" class="custom-select">
+                <option value="北新竹">北新竹</option>
+                <option value="千甲">千甲</option>
+                <option value="新莊">新莊</option>
+                <option value="新竹">新竹</option>
+                <option value="三姓橋">三姓橋</option>
+                <option value="香山">香山</option>
+            </select>
+        </div>
+        <!-- 苗栗 -->
+        <div id="second-Miaoli2" style="display: none;">
+            <select id="second-select" class="custom-select">
+                <option value="崎頂">崎頂</option>
+                <option value="竹南">竹南</option>
+                <option value="談文">談文</option>
+                <option value="大山">大山</option>
+                <option value="後龍">後龍</option>
+                <option value="龍港">龍港</option>
+                <option value="白沙屯">白沙屯</option>
+                <option value="新埔">新埔</option>
+                <option value="通霄">通霄</option>
+                <option value="苑裡">苑裡</option>
+                <option value="造橋">造橋</option>
+                <option value="豐富">豐富</option>
+                <option value="苗栗">苗栗</option>
+                <option value="南勢">南勢</option>
+                <option value="銅鑼">銅鑼</option>
+                <option value="三義">三義</option>
+            </select>
+        </div>
+        <!-- 彰化 -->
+        <div id="second-Changhua2" style="display: none;">
+            <select id="second-select" class="custom-select">
+                <option value="彰化">彰化</option>
+                <option value="花壇">花壇</option>
+                <option value="大村">大村</option>
+                <option value="員林">員林</option>
+                <option value="永靖">永靖</option>
+                <option value="社頭">社頭</option>
+                <option value="田中">田中</option>
+                <option value="二水">二水</option>
+                <option value="源泉">源泉</option>
+            </select>
+        </div>
+        <!-- 南投 -->
+        <div id="second-Nantou2" style="display: none;">
+            <select id="second-select" class="custom-select">
+                <option value="濁水">濁水</option>
+                <option value="龍泉">龍泉</option>
+                <option value="集集">集集</option>
+                <option value="水里">水里</option>
+                <option value="車埕">車埕</option>
+            </select>
+        </div>
+        <!-- 雲林 -->
+        <div id="second-Yunlin2" style="display: none;">
+            <select id="second-select" class="custom-select">
+                <option value="林內">林內</option>
+                <option value="石榴">石榴</option>
+                <option value="斗六">斗六</option>
+                <option value="斗南">斗南</option>
+                <option value="石龜">石龜</option>
+            </select>
+        </div>
+        <!-- 嘉義縣 -->
+        <div id="second-Chiayi-County2" style="display: none;">
+            <select id="second-select" class="custom-select">
+                <option value="Dalin">大林</option>
+                <option value="Minxiong">民雄</option>
+                <option value="on the water">水上</option>
+                <option value="Nanjing">南靖</option>
+            </select>
+        </div>
+        <!-- 嘉義市 -->
+        <div id="second-Chiayi-City2" style="display: none;">
+            <select id="second-select" class="custom-select">
+                <option value="Jiabei">嘉北</option>
+                <option value="Chiayi">嘉義</option>
+            </select>
+        </div>
+        <!-- 台南市 -->
+        <div id="second-Tainan2" style="display: none;">
+            <select id="second-select" class="custom-select">
+                <option value="Jiabei">後壁</option>
+                <option value="Chiayi">新營</option>
+                <option value="Jiabei">柳營</option>
+                <option value="Chiayi">林鳳營</option>
+                <option value="Jiabei">隆田</option>
+                <option value="Chiayi">拔林</option>
+                <option value="Jiabei">善化</option>
+                <option value="Chiayi">南科</option>
+                <option value="Jiabei">新市</option>
+                <option value="Chiayi">永康</option>
+                <option value="Chiayi">大橋</option>
+                <option value="Chiayi">臺南</option>
+                <option value="Chiayi">保安</option>
+                <option value="Chiayi">仁德</option>
+                <option value="Chiayi">中洲</option>
+                <option value="Chiayi">長榮大學</option>
+                <option value="Chiayi">沙崙</option>
+            </select>
+        </div>
+        <!-- 高雄 -->
+        <div id="second-Kaohsiung2" style="display: none;">
+            <select id="second-select" class="custom-select">
+                <option value="great lake">大湖</option>
+                <option value="Lu Zhu">路竹</option>
+                <option value="Okayama">岡山</option>
+                <option value="bridgehead">橋頭</option>
+                <option value="Nan Zi">楠梓</option>
+                <option value="Xinzuoying">新左營</option>
+                <option value="Zuoying">左營</option>
+                <option value="Neiwei">內惟</option>
+                <option value="art gallery">美術館</option>
+                <option value="drum mountain">鼓山</option>
+                <option value="Sankuai">三塊厝</option>
+                <option value="Kaohsiung">高雄</option>
+                <option value="nationality">民族</option>
+                <option value="Science and Industry Museum">科工館</option>
+                <option value="justice">正義</option>
+                <option value="Fengshan">鳳山</option>
+                <option value="Houzhuang">後庄</option>
+                <option value="Jiuqu Hall">九曲堂</option>
+            </select>
+        </div>
+        <!-- 屏東 -->
+        <div id="second-Pintung2" style="display: none;">
+            <select id="second-select" class="custom-select">
+                <option value="Liukuaicuo">六塊厝</option>
+                <option value="Pingtung">屏東</option>
+                <option value="come back">歸來</option>
+                <option value="Linluo">麟洛</option>
+                <option value="west trend">西勢</option>
+                <option value="Takeda">竹田</option>
+                <option value="Chaozhou">潮州</option>
+                <option value="Kanding">崁頂</option>
+                <option value="Nanzhou">南州</option>
+                <option value="Zhen'an">鎮安</option>
+                <option value="forest edge">林邊</option>
+                <option value="Jiadong">佳冬</option>
+                <option value="East China Sea">東海</option>
+                <option value="Fangliao">枋寮</option>
+                <option value="Gallo">加祿</option>
+                <option value="inner lion">內獅</option>
+                <option value="Fangshan">枋山</option>
+            </select>
+        </div>
+        <!-- 台東 -->
+        <div id="second-Taitung2" style="display: none;">
+            <select id="second-select" class="custom-select">
+                <option value="Dawu">大武</option>
+                <option value="Long Creek">瀧溪</option>
+                <option value="Jinlun">金崙</option>
+                <option value="too mari">太麻里</option>
+                <option value="Zhiben">知本</option>
+                <option value="recreation">康樂</option>
+                <option value="Taitung">臺東</option>
+                <option value="in the mountains">山里</option>
+                <option value="Kano">鹿野</option>
+                <option value="Ruiyuan">瑞源</option>
+                <option value="Ruihe">瑞和</option>
+                <option value="Guanshan">關山</option>
+                <option value="sea ​​end">海端</option>
+                <option value="Ikegami">池上</option>
+            </select>
+        </div>
+
+        <input type="submit" id="search-train" value="查询">
+    </div>
+
+    <div class="result">
+        <h3>查询结果:</h3>
+        <div id="apireponse"></div>
+    </div>
+</body>
+    
+    <link rel="stylesheet" href="//apps.bdimg.com/libs/jqueryui/1.10.4/css/jquery-ui.min.css">
+    <script src="//apps.bdimg.com/libs/jqueryui/1.10.4/jquery-ui.min.js"></script>
+    <script src="../static/train.js"></script>
+</html>

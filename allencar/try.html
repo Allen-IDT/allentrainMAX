@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>火车时刻查询</title>
+    <link rel="stylesheet" href="../static/max.css">
+    <style>
+        .custom-select {
+            display: inline-block;
+            position: relative;
+            font-family: Arial, sans-serif;
+            font-size: 14px;
+            padding: 8px 12px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            background-color: #fff;
+            color: #333;
+        }
+
+        .custom-select:focus {
+            outline: none;
+            border-color: #66afe9;
+        }
+
+        .custom-select::after {
+            content: '\25BC';
+            position: absolute;
+            top: 50%;
+            right: 10px;
+            transform: translateY(-50%);
+            pointer-events: none;
+        }
+
+        .custom-select option {
+            background-color: #fff;
+            color: #333;
+        }
+        .custom-select {
+            background-color: #f2f2f2;
+            color: #333;
+        }
+        .custom-select option {
+            background-color: #f2f2f2;
+            color: #333;
+        }
+        .custom-select {
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        .custom-select {
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .custom-select {
+            width: 200px;
+            height: 30px;
+        }
+        .custom-select::after {
+            color: #666;
+        }   
+    </style>
+</head>
+<body>
+    <h3>請選擇火車站點：</h3>
+    <select id="station-select" class="custom-select">
+        <option value="台北">台北</option>
+        <option value="新北">新北</option>
+        <option value="桃園">桃園</option>
+        <option value="台中">台中</option>
+        <option value="台南">台南</option>
+        <option value="高雄">高雄</option>
+        <!-- 其他縣市的選項 -->
+    </select>
+
+    <script>
+        // 監聽選單的變動事件
+        var select = document.getElementById("station-select");
+        select.addEventListener("change", function() {
+            var selectedOption = this.options[this.selectedIndex];
+            var selectedStation = selectedOption.value;
+            console.log("選擇的火車站點：" + selectedStation);
+            // 可以在此處進行相應的操作，例如顯示選擇的火車站點的資訊
+        });
+    </script>
+
+</html>
